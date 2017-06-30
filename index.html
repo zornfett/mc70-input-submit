@@ -2,43 +2,107 @@
 <html lang="en">
 	<head>
 	<meta charset="utf-8">
-	<title>V.1 - we're going to attempt to submit scan data from this bitch-ass MC70 to a dB/spreadsheet doc via an input field</title>
+	<title>V.2 - we're going to attempt to submit scan data from this bitch-ass MC70 to a dB/spreadsheet doc via an input field</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
-	<style>
-
-	</style>
+	<style></style>
 	</head>
 	<body>
 
 	<div class="container">
-	<br /><br />
-	<!-- <form action="" method="get">
-		<label for="GET-name">Name:</label>
-		<input id="GET-name" type="text" name="name">
-		<input type="submit" value="Save">
-	</form> -->
+		<br /><br />
 
-	<!-- Simple form which will send a POST request -->
-	<form action="" method="post">
-		<label for="POST-name">pump data here:</label>
-		<input id="POST-name" type="text" name="name">
-		<input type="submit" value="Choy!">
-	</form>
-	<br /><br />
-	
+		<form id="form_id">
+			<!-- <label for="firstname">First Name:</label> -->
+			<input type="text" id="firstname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
+			<!-- <label for="lastname">Last Name:</label>
+			<input type="text" id="lastname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" /> -->
+			<input type="button" value="submit" id="submit" />
+		</form>
+		<div id="table">
+			<table class="footable">
+				<thead>
+					<tr>
+						<th data-class="expand"><br />list of scannies<br /><br /></th>
+						<!-- <th>Last Name</th> -->
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+
+		<br /><br />
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+	var names = [],
+	tbody = $("#table tbody");
+
+	function getInfo(e) {
+		var nameObj = {
+			first: e.target.form[0].value,
+			// last: e.target.form[1].value
+		};
+
+		names.push(nameObj);
+
+		e.target.form[0].value = "";
+		// e.target.form[1].value = "";
+		tbody.empty();
+
+		names.forEach(function (name){
+			var tr = $("<tr>");
+
+			tr.append($("<td>").text(name.first));
+			// tr.append($("<td>").text(name.last));
+
+			tbody.append(tr);
+		});
+	}
+
+	$("#submit").on("click", getInfo);
+
+	</script>
+	</body>
+</html>
+
+<!-- 
+https://stackoverflow.com/questions/16083063/save-inputs-in-array-and-display-all-item-jquery-javascript
+
+https://api.jquery.com/serialize/
+
+https://developer.mozilla.org/en-US/docs/Web/Events/change
+
+NO NO NO
+https://stackoverflow.com/questions/43346528/single-value-into-array-from-form-submit
+
+http://plnkr.co/edit/6iZSIBa9S1G95pIMBRBu
+
+https://docs.google.com/spreadsheets/d/1fPXkBcNgIqLxVHa8vnvEoZj5XKkp-nN5Qi9PaxKiHDw/edit#gid=0
+mc70-post-script
+https://script.google.com/macros/s/AKfycbxYUwV4G716c8-tmKeKtR2sNypTAy9utMTSYcwqVNea37xe1c2B/exec
+
+https://groups.google.com/forum/#!topic/formemailer/qzgbJgXhQ8I
+https://stackoverflow.com/questions/28800580/the-coordinates-or-dimensions-of-the-range-are-invalid-using-variable
+
+$('.boink').on('click', function(){
+	console.log('boink!');
+})
+
+https://stackoverflow.com/questions/21102684/google-forms-send-data-to-spreadsheet
+https://mashe.hawksey.info/2011/10/google-spreadsheets-as-a-database-insert-with-apps-script-form-postget-submit-method/
+
+2015 PHP version
+https://stackoverflow.com/questions/29796925/google-sheets-as-a-database-with-ajax
+
 	<p>robb@b-air.com</p>
 	<p>bairtester1@outlook.com</p>
 	<p>p4trickI5c00l!!</p>
 	<p>http://go.shr.lc/2tvmwb8</p>
 
-	<br /><br />
-	</div>
-
-	<script src="ZZZZZZ.js"></script>
-	<script>/* */</script>
-	</body>
-</html>
+-->
