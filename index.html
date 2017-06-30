@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	<meta charset="utf-8">
-	<title>V.2 - we're going to attempt to submit scan data from this bitch-ass MC70 to a dB/spreadsheet doc via an input field</title>
+	<title>V.3 - we're attempting to submit scan data from the MC70 into a [cloudy] spreadsheet via an input field</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -19,8 +19,9 @@
 			<!-- <label for="firstname">First Name:</label> -->
 			<input type="text" id="firstname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
 			<!-- <label for="lastname">Last Name:</label>
-			<input type="text" id="lastname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" /> -->
+			<input type="text" id="lastname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
 			<input type="button" value="submit" id="submit" />
+			<input type="button" value="submit" id="natas" /> -->
 		</form>
 		<div id="table">
 			<table class="footable">
@@ -63,15 +64,27 @@
 
 			tbody.append(tr);
 		});
+		console.log('ch-ch-ch-chaaanges!')
 	}
+	// $("#submit").on("click", getInfo);
 
-	$("#submit").on("click", getInfo);
+	document.addEventListener('DOMContentLoaded', function(){
+		document.querySelector('#firstname').onchange=getInfo;
+	})
+
+	// on click "new", create a new document based on datetime?
+	// - cancel option?
+	// on scan/field input, put data into array & display
+	// on click "save", close access to the present doc and revert to default state
 
 	</script>
 	</body>
 </html>
 
 <!-- 
+
+https://developers.google.com/sheets/api/v3/
+
 https://stackoverflow.com/questions/16083063/save-inputs-in-array-and-display-all-item-jquery-javascript
 
 https://api.jquery.com/serialize/
