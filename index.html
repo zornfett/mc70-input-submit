@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	<meta charset="utf-8">
-	<title>V.3 - we're attempting to submit scan data from the MC70 into a [cloudy] spreadsheet via an input field</title>
+	<title>V.4 - we're attempting to submit scan data from the MC70 into a [cloudy] spreadsheet via an input field</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -16,9 +16,10 @@
 		<br /><br />
 
 		<form id="form_id">
-			<!-- <label for="firstname">First Name:</label> -->
-			<input type="text" id="firstname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
-			<!-- <label for="lastname">Last Name:</label>
+			<!-- <input type="text" id="firstname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" /> -->
+
+			<!-- <label for="firstname">First Name:</label>
+			<label for="lastname">Last Name:</label>
 			<input type="text" id="lastname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
 			<input type="button" value="submit" id="submit" />
 			<input type="button" value="submit" id="natas" /> -->
@@ -32,6 +33,9 @@
 					</tr>
 				</thead>
 				<tbody>
+					<textarea id="textbox"></textarea>
+					<button id="create">Create file</button>
+					<a download="info.txt" id="downloadlink" style="display: none">Download</a>
 				</tbody>
 			</table>
 		</div>
@@ -41,6 +45,34 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
+
+	(function(){
+		var textFile = null,
+		makeTextFile = function (text) {
+			var data = new Blob([text], {type: 'text/plain'});
+
+			/* If we are replacing a previously generated file we need to
+			manually revoke the object URL to avoid memory leaks. */
+			if (textFile !== null) {
+				window.URL.revokeObjectURL(textFile);
+			}
+
+			textFile = window.URL.createObjectURL(data);
+			return textFile;
+		};
+
+		var create = document.getElementById('create'),
+		textbox = document.getElementById('textbox');
+
+		create.addEventListener('click', function () {
+			var link = document.getElementById('downloadlink');
+			link.href = makeTextFile(textbox.value);
+			link.style.display = 'block';
+		}, false);
+	})();
+
+
+/* PREVIOUS SOLUTION
 	var names = [],
 	tbody = $("#table tbody");
 
@@ -71,7 +103,7 @@
 	document.addEventListener('DOMContentLoaded', function(){
 		document.querySelector('#firstname').onchange=getInfo;
 	})
-
+*/
 	// on click "new", create a new document based on datetime?
 	// - cancel option?
 	// on scan/field input, put data into array & display
