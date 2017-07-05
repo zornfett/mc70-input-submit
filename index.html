@@ -1,119 +1,79 @@
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 	<meta charset="utf-8">
-	<title>V.4 - we're attempting to submit scan data from the MC70 into a [cloudy] spreadsheet via an input field</title>
+	<title>V.575 - we're attempting to submit scan data from the MC70 into a [cloudy] spreadsheet via an input field</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
-	<style></style>
+	<style>
+#textArea {
+  display: block;
+  width: 100%;
+}
+	</style>
 	</head>
 	<body>
 
 	<div class="container">
 		<br /><br />
 
-		<form id="form_id">
-			<!-- <input type="text" id="firstname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" /> -->
-
-			<!-- <label for="firstname">First Name:</label>
-			<label for="lastname">Last Name:</label>
-			<input type="text" id="lastname" name="name" value="" placeholder="Max" required="required" autofocus="autofocus" />
-			<input type="button" value="submit" id="submit" />
-			<input type="button" value="submit" id="natas" /> -->
-		</form>
-		<div id="table">
-			<table class="footable">
-				<thead>
-					<tr>
-						<th data-class="expand"><br />list of scannies<br /><br /></th>
-						<!-- <th>Last Name</th> -->
-					</tr>
-				</thead>
-				<tbody>
-					<textarea id="textbox"></textarea>
-					<button id="create">Create file</button>
-					<a download="info.txt" id="downloadlink" style="display: none">Download</a>
-				</tbody>
-			</table>
-		</div>
+<textarea id="textArea" rows="3">
+   Notes here...
+</textarea>
+<button type="button" value="save" id="save">Save</button>
 
 		<br /><br />
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
+function saveTextAsFile() {
+  var textToWrite = document.getElementById('textArea');
+  var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
+  var fileNameToSaveAs = "ecc.plist";
 
-	(function(){
-		var textFile = null,
-		makeTextFile = function (text) {
-			var data = new Blob([text], {type: 'text/plain'});
+  var downloadLink = document.createElement("a");
+  downloadLink.download = fileNameToSaveAs;
+  downloadLink.innerHTML = "Download File";
+  if (window.webkitURL != null) {
+    // Chrome allows the link to be clicked without actually adding it to the DOM.
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+  } else {
+    // Firefox requires the link to be added to the DOM before it can be clicked.
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+  }
 
-			/* If we are replacing a previously generated file we need to
-			manually revoke the object URL to avoid memory leaks. */
-			if (textFile !== null) {
-				window.URL.revokeObjectURL(textFile);
-			}
+  downloadLink.click();
+}
 
-			textFile = window.URL.createObjectURL(data);
-			return textFile;
-		};
+var button = document.getElementById('save');
+button.addEventListener('click', saveTextAsFile);
 
-		var create = document.getElementById('create'),
-		textbox = document.getElementById('textbox');
-
-		create.addEventListener('click', function () {
-			var link = document.getElementById('downloadlink');
-			link.href = makeTextFile(textbox.value);
-			link.style.display = 'block';
-		}, false);
-	})();
-
-
-/* PREVIOUS SOLUTION
-	var names = [],
-	tbody = $("#table tbody");
-
-	function getInfo(e) {
-		var nameObj = {
-			first: e.target.form[0].value,
-			// last: e.target.form[1].value
-		};
-
-		names.push(nameObj);
-
-		e.target.form[0].value = "";
-		// e.target.form[1].value = "";
-		tbody.empty();
-
-		names.forEach(function (name){
-			var tr = $("<tr>");
-
-			tr.append($("<td>").text(name.first));
-			// tr.append($("<td>").text(name.last));
-
-			tbody.append(tr);
-		});
-		console.log('ch-ch-ch-chaaanges!')
-	}
-	// $("#submit").on("click", getInfo);
-
-	document.addEventListener('DOMContentLoaded', function(){
-		document.querySelector('#firstname').onchange=getInfo;
-	})
-*/
-	// on click "new", create a new document based on datetime?
-	// - cancel option?
-	// on scan/field input, put data into array & display
-	// on click "save", close access to the present doc and revert to default state
-
+function destroyClickedElement(event) {
+  // remove the link from the DOM
+  document.body.removeChild(event.target);
+}
 	</script>
 	</body>
 </html>
 
 <!-- 
+
+https://stackoverflow.com/questions/12887702/javascript-display-new-page-when-submit-html-form
+
+==
+
+https://stackoverflow.com/questions/14693758/passing-form-data-to-another-html-page
+https://stackoverflow.com/questions/12183572/how-to-use-javascript-to-fill-a-form-on-another-page/12183659#12183659
+
+MO' NO
 
 https://developers.google.com/sheets/api/v3/
 
